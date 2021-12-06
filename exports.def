@@ -1,4 +1,4 @@
 LIBRARY	"iEquipUtil"
 EXPORTS
-SKSEPlugin_Query
+SKSEPlugin_Version
 SKSEPlugin_Load

@@ -1,0 +1,14 @@
+{
+  "name": "iequiputil",
+  "version-string": "1",
+  "description": "IEQP script extender",
+  "homepage": "https://github.com/ahzaab/iEquipUtil",
+  "license": "MIT",
+  "dependencies": [
+    "boost-stl-interfaces",
+    "spdlog",
+    "xbyak",
+    "rsm-binary-io",
+	"nlohmann-json"
+  ]
+}
