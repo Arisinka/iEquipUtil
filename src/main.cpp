@@ -158,15 +158,28 @@ namespace
 
 extern "C"
 {
-    bool SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
+    DLLEXPORT constinit auto SKSEPlugin_Version = []() {
+        SKSE::PluginVersionData v{};
+        v.pluginVersion = Version::MAJOR;
+        v.PluginName("iEquipUtil"sv);
+        v.CompatibleVersions({ SKSE::RUNTIME_LATEST });
+        v.UsesAddressLibrary(true);
+        return v;
+    }();
+
+    DLLEXPORT bool SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
     {
-        //std::setlocale(LC_ALL, "");
+        //while (!IsDebuggerPresent()) {
+        //    Sleep(10);
+        //}
+
+        //Sleep(1000 * 2);
+
 
         try {
 #ifndef NDEBUG
             auto                    msvc_sink = std::make_shared<spdlog::sinks::msvc_sink_mt>();
-            auto                    console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-            spdlog::sinks_init_list sink_list = { msvc_sink, console_sink };
+            spdlog::sinks_init_list sink_list = { msvc_sink };
             auto                    log = std::make_shared<spdlog::logger>("multi_sink", sink_list.begin(), sink_list.end());
             log->set_level(spdlog::level::trace);
             spdlog::flush_every(std::chrono::seconds(3));
@@ -190,44 +203,8 @@ extern "C"
             spdlog::set_pattern("%g(%#): [%l] %v");
 
 
-            logger::info("iEquipUtil v{}"sv, IEQP_VERSION_VERSTRING);
+            logger::info("iEquipUtil v{}"sv, Version::NAME);
 
-            a_info->infoVersion = SKSE::PluginInfo::kVersion;
-            a_info->name = "iEquipUtil";
-            a_info->version = IEQP_VERSION_MAJOR;
-
-            if (a_skse->IsEditor()) {
-                logger::critical("Loaded in editor, marking as incompatible!\n");
-                return false;
-            }
-
-            auto ver = a_skse->RuntimeVersion();
-            if (ver <= SKSE::RUNTIME_1_5_39) {
-                logger::critical("Unsupported runtime version {}!"sv, ver.string().c_str());
-                return false;
-            }
-        } catch (const std::exception& e) {
-            logger::critical(e.what());
-            return false;
-        } catch (...) {
-            logger::critical("caught unknown exception"sv);
-            return false;
-        }
-
-        return true;
-    }
-
-
-    bool SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
-    {
-        //while (!IsDebuggerPresent()) {
-        //    Sleep(10);
-        //}
-
-        //Sleep(1000 * 2);
-
-
-        try {
             logger::info("iEquipUtil loaded");
 
             SKSE::Init(a_skse);

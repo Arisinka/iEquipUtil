@@ -1,6 +1,5 @@
 set(headers ${headers}
     include/PCH.h
-	external/Json2Settings/include/Json2Settings.h
     include/ActorExt.h
     include/AmmoExt.h
     include/Events.h
