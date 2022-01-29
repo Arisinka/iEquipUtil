@@ -38,7 +38,7 @@ bool RefHandleManager::Save(SKSE::SerializationInterface* a_intfc, uint32_t a_ty
 {
     Locker locker(_lock);
 
-    a_intfc->OpenRecord(a_type, a_version);
+    auto returnVal = a_intfc->OpenRecord(a_type, a_version);
 
     a_intfc->WriteRecordData(_init);
 

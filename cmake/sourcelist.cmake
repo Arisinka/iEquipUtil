@@ -1,0 +1,24 @@
+set(sources ${sources}
+    src/PCH.cpp
+    src/ActorExt.cpp
+    src/AmmoExt.cpp
+    src/Events.cpp
+    src/FormExt.cpp
+    src/HashUtil.cpp
+    src/Hooks.cpp
+    src/InventoryExt.cpp     
+    src/LightExt.cpp
+    src/LocaleManager.cpp   
+    src/MagicEffectExt.cpp        
+    src/ObjectReferenceExt.cpp
+    src/Papyrus.cpp    
+    src/RefHandleManager.cpp
+    src/Registration.cpp  
+    src/Settings.cpp        
+    src/SoulSeeker.cpp
+    src/SpellExt.cpp
+    src/StringExt.cpp
+    src/UIExt.cpp
+    src/WeaponExt.cpp
+	src/main.cpp
+)

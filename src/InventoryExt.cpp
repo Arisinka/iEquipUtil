@@ -513,9 +513,8 @@ namespace InventoryExt
                         auto entry = new RE::InventoryEntryData(item->As<RE::TESBoundObject>(), 0);
 
                         invChanges->AddEntryData(entry);
-                        if (entry->extraLists->empty()) {
-                            auto xList = new RE::ExtraDataList();
-                            entry->extraLists->push_front(xList);
+                        if (!entry->extraLists || entry->extraLists->empty()) {
+                            entry->AddExtraList(new RE::ExtraDataList());
                         }
                     } else {
                         auto it = (std::find_if(invChanges->entryList->begin(), invChanges->entryList->end(), [item](const RE::InventoryEntryData* arg) {
@@ -524,13 +523,8 @@ namespace InventoryExt
 
                         if (it != invChanges->entryList->end()) {
                             auto entry = *it;
-
-                            if (!entry->extraLists) {
+                            if (!entry->extraLists || entry->extraLists->empty()) {
                                 entry->AddExtraList(new RE::ExtraDataList());
-                            }
-                            if (entry->extraLists->empty()) {
-                                auto xList = new RE::ExtraDataList();
-                                entry->extraLists->push_front(xList);
                             }
                         }
                     }

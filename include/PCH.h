@@ -1,28 +1,24 @@
 #pragma once
 
 #include "RE/Skyrim.h"
-#include <xbyak/xbyak.h>  // must be between these two
+#include "REL/Relocation.h"
 #include "SKSE/SKSE.h"
 
-#include "SKSE/Logger.h"
+#include "RE/Skyrim.h"
+#include "SKSE/SKSE.h"
 
+#include <memory>
+#include <string>
+
+#ifdef NDEBUG
 #include <spdlog/sinks/basic_file_sink.h>
-
-#ifndef NDEBUG
-#include <iostream>
+#else
 #include <spdlog/sinks/msvc_sink.h>
-#include <spdlog/sinks/stdout_color_sinks.h>
 #endif
 
-
 using namespace std::literals;
-namespace logger = SKSE::log;
 
-template <typename T1, typename T2>
-inline T2* dyna_cast(T1* base)
-{
-    auto asForm = static_cast<T1*>(base);
-    auto ret = (asForm)->As<T2>();
-    return ret;
-}
-#define DYNAMIC_CAST(base, srcType, targetType) (dyna_cast<srcType, targetType>(base))
+namespace logger = SKSE::log;
+namespace stl = SKSE::stl;
+
+#define DLLEXPORT __declspec(dllexport)

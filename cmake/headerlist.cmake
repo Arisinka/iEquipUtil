@@ -1,0 +1,23 @@
+set(headers ${headers}
+    include/PCH.h
+    include/ActorExt.h
+    include/AmmoExt.h
+    include/Events.h
+    include/FormExt.h
+    include/HashUtil.h
+    include/Hooks.h
+    include/InventoryExt.h     
+    include/LightExt.h
+    include/LocaleManager.h   
+    include/MagicEffectExt.h        
+    include/ObjectReferenceExt.h
+    include/Papyrus.h    
+    include/RefHandleManager.h
+    include/Registration.h  
+    include/Settings.h        
+    include/SoulSeeker.h
+    include/SpellExt.h
+    include/StringExt.h
+    include/UIExt.h
+    include/WeaponExt.h
+)
