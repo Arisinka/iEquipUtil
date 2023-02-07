@@ -1,24 +1,50 @@
 #include "pch.h"
-// #pragma once
-// #include "external/CommonLibSSE/include/RE/B/BSAtomic.h"
-// #include "external/CommonLibSSE/include/RE/B/BSExtraData.h"
-// #include "external/CommonLibSSE/include/RE/B/BSPointerHandle.h"
-// #include "external/CommonLibSSE/include/RE/E/ExtraDataTypes.h"
-// #include "external/CommonLibSSE/include/RE/E/ExtraFlags.h"
-// #include "external/CommonLibSSE/include/RE/F/FormTypes.h"
-// #include "external/CommonLibSSE/include/RE/M/MemoryManager.h"
-// #include "external/CommonLibSSE/include/RE/S/SoulLevels.h"
-// #include "external/CommonLibSSE/include/RE/E/ExtraDataList.h"
+#include "BaseExtraListEx.h"
+#include "Offsets.h"
+
+void BaseExtraListEx::Dtor(/*RE::BaseExtraList *a*/)
+{
+	BaseExtraListEx::_Dtor();
+}
+
+void BaseExtraListEx::InstallHooks()
+{
+	// Override to prevent the Native StatsMenu from doing anything.
+	REL::Relocation<std::uintptr_t> vTable(IEquip::Offsets::BaseExtraListEx::Vtbl);
+	BaseExtraListEx::_Dtor = vTable.write_vfunc(0x1, &BaseExtraListEx::Dtor);
+}
+
+void BaseExtraListEx::Ctor()
+{
+    using func_t = decltype(&BaseExtraListEx::Ctor);
+    REL::Relocation<func_t> func{ IEquip::Offsets::BaseExtraListEx::Ctor };
+    return func();
+}
 
 namespace RE
 {
-	BaseExtraList::BaseExtraList()
-	{
-		
-	}
+	// BaseExtraList::BaseExtraList()
+	// {
+	// 	BaseExtraListEx::Ctor();
+	// }
+
+
+// 		ExtraDataList* ConstructExtraDataList()
+// {
+//     using func_t = ExtraDataList*(*)();
+//     REL::Relocation<func_t> func{ RELOCATION_ID(???, 11583) };
+//     return func();
+// }
+
+// For the address ID, I dumped the AE addresses and found 1401135B0.
+// How would I go about finding the ID for SE, as I only know the address for 1.6.640?
+
+
+// ExtraDataList::Constructor_1401135B0
+	//}
 
 	BaseExtraList::~BaseExtraList()
 	{
-		
+		// Corresponding members are already deleted by RE
 	}
 }
