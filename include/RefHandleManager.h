@@ -56,7 +56,7 @@ public:
     bool IsInit() const;
     void SetInit();
 
-private:
+public:
     using EventResult = RE::BSEventNotifyControl;
     using Lock = std::recursive_mutex;
     using Locker = std::lock_guard<Lock>;
