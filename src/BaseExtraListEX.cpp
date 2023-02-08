@@ -2,16 +2,16 @@
 #include "BaseExtraListEx.h"
 #include "Offsets.h"
 
-void BaseExtraListEx::Dtor(/*RE::BaseExtraList *a*/)
+void BaseExtraListEx::Dtor(RE::BaseExtraList *a)
 {
-	BaseExtraListEx::_Dtor();
+	BaseExtraListEx::_Dtor(a);
 }
 
 void BaseExtraListEx::InstallHooks()
 {
 	// Override to prevent the Native StatsMenu from doing anything.
 	REL::Relocation<std::uintptr_t> vTable(IEquip::Offsets::BaseExtraListEx::Vtbl);
-	BaseExtraListEx::_Dtor = vTable.write_vfunc(0x1, &BaseExtraListEx::Dtor);
+	BaseExtraListEx::_Dtor = vTable.write_vfunc(0x0, &BaseExtraListEx::Dtor);
 }
 
 void BaseExtraListEx::Ctor()
@@ -46,5 +46,7 @@ namespace RE
 	BaseExtraList::~BaseExtraList()
 	{
 		// Corresponding members are already deleted by RE
+		BaseExtraListEx::Dtor(this);
+		stl::memzero(this);
 	}
 }
