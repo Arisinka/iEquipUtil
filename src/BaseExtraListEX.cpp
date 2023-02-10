@@ -9,7 +9,7 @@ void BaseExtraListEx::Dtor(RE::BaseExtraList *a)
 
 void BaseExtraListEx::InstallHooks()
 {
-	// Override to prevent the Native StatsMenu from doing anything.
+	// Hook the Dtor that is now in the vtable and call that when the Dtor here is called
 	REL::Relocation<std::uintptr_t> vTable(IEquip::Offsets::BaseExtraListEx::Vtbl);
 	BaseExtraListEx::_Dtor = vTable.write_vfunc(0x0, &BaseExtraListEx::Dtor);
 }

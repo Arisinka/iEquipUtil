@@ -164,6 +164,7 @@ extern "C"
         v.PluginName("iEquipUtil"sv);
         v.CompatibleVersions({ SKSE::RUNTIME_LATEST });
         v.UsesAddressLibrary(true);
+        v.UsesStructsPost629(true);
         return v;
     }();
 
