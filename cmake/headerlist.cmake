@@ -20,4 +20,6 @@ set(headers ${headers}
     include/StringExt.h
     include/UIExt.h
     include/WeaponExt.h
+    include/BaseExtraListEx.h
+    include/Offsets.h
 )

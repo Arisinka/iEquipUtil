@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(
 	iEquipUtil
-	VERSION 13.0.0.0
+	VERSION 14.0.0.0
 	LANGUAGES CXX
 )
 

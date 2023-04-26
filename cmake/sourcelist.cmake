@@ -21,4 +21,5 @@ set(sources ${sources}
     src/UIExt.cpp
     src/WeaponExt.cpp
 	src/main.cpp
+    src/BaseExtraListEx.cpp
 )

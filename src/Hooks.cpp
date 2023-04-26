@@ -10,7 +10,7 @@
 
 #include "RefHandleManager.h"
 #include "Registration.h"
-
+#include "BaseExtraListEx.h"
 
 namespace Hooks
 {
@@ -46,7 +46,6 @@ namespace Hooks
                 if (a_object && a_extraList && manager->IsInit() && manager->IsTrackedType(a_object)) {
                     manager->TryInvalidateAndDispatch(a_object, a_extraList);
                 }
-
                 return _RemoveItem(this, a_object, a_count, a_reason, a_extraList, a_moveToRef, a_dropLoc, a_rotate);
             }
 
@@ -158,6 +157,7 @@ namespace Hooks
     void Install()
     {
         PlayerCharacterEx::InstallHooks();
+        BaseExtraListEx::InstallHooks();
         logger::info("Installed all hooks");
     }
 }
