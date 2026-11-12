@@ -11,12 +11,12 @@ namespace UIExt
 		if (!invMenu) {
 			a_vm->TraceStack("Inventory menu is not open!", a_stackID, Severity::kWarning);
 			return 0;
-		} else if (!invMenu->itemList) {
+		} else if (!invMenu->GetRuntimeData().itemList) {
 			a_vm->TraceStack("Inventory menu has no item list!", a_stackID, Severity::kWarning);
 			return 0;
 		}
 
-		auto& items = invMenu->itemList->items;
+		auto& items = invMenu->GetRuntimeData().itemList->items;
 		if (a_index >= items.size()) {
 			a_vm->TraceStack("Index is out of range!", a_stackID, Severity::kWarning);
 			return 0;

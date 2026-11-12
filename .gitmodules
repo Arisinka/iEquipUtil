@@ -1,7 +1,7 @@
 [submodule "external/CommonLibSSE"]
 	path = external/CommonLibSSE
-	url = https://github.com/Ryan-rsm-McKenzie/CommonLibSSE.git
-	branch = master
+	url = https://github.com/alandtse/CommonLibSSE-NG
+	branch = ng
 [submodule "external/Json2Settings"]
 	path = external/Json2Settings
 	url = https://github.com/Ryan-rsm-McKenzie/Json2Settings.git

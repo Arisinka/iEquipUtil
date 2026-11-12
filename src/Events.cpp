@@ -23,8 +23,8 @@ namespace Events
         {
             auto player = RE::PlayerCharacter::GetSingleton();
 
-            auto rightHand = player->currentProcess->GetEquippedRightHand();
-            auto leftHand = player->currentProcess->GetEquippedLeftHand();
+            auto rightHand = player->GetActorRuntimeData().currentProcess->GetEquippedRightHand();
+            auto leftHand = player->GetActorRuntimeData().currentProcess->GetEquippedLeftHand();
 
             uint32_t slotID = 0;
             if (rightHand && rightHand->formID == a_weap->formID) {
@@ -52,8 +52,8 @@ namespace Events
                 return kSlotID_Left + kSlotID_Right;
             }
 
-            uint32_t slotID = !player->currentProcess->GetEquippedRightHand() ? kSlotID_Right : kSlotID_Default;
-            slotID += !player->currentProcess->GetEquippedLeftHand() ? kSlotID_Left : kSlotID_Default;
+            uint32_t slotID = !player->GetActorRuntimeData().currentProcess->GetEquippedRightHand() ? kSlotID_Right : kSlotID_Default;
+            slotID += !player->GetActorRuntimeData().currentProcess->GetEquippedLeftHand() ? kSlotID_Left : kSlotID_Default;
             return slotID;
         }
     }

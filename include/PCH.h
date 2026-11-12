@@ -10,6 +10,10 @@
 #include <memory>
 #include <string>
 
+#ifdef GetObject
+#undef GetObject
+#endif
+
 #ifdef NDEBUG
 #include <spdlog/sinks/basic_file_sink.h>
 #else

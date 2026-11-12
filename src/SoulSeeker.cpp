@@ -83,10 +83,9 @@ namespace SoulSeeker
 
         bool IsReusable(RE::TESSoulGem* a_gem)
         {
-            using Object = RE::DEFAULT_OBJECT;
             auto dobj = RE::BGSDefaultObjectManager::GetSingleton();
-            auto reusableSoulGem = dobj->GetObject<RE::BGSKeyword>(Object::kKeywordReusableSoulGem);
-            return a_gem->HasKeyword(reusableSoulGem);
+            auto reusableSoulGem = dobj->GetObject<RE::BGSKeyword>(RE::DefaultObjectID::kKeywordReusableSoulGem);
+            return reusableSoulGem && a_gem->HasKeyword(*reusableSoulGem);
         }
 
 

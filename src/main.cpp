@@ -76,7 +76,7 @@ namespace
         uint32_t length;
         while (a_intfc->GetNextRecordInfo(type, version, length)) {
             if (version != kSerializationVersion) {
-                logger::error("Loaded data is out of date! Read ({}), expected ({}) for type code ({})"sv, version, kSerializationVersion, DecodeTypeCode(type).c_str());
+                logger::error("Loaded data is out of date! Read ({}), expected ({}) for type code ({})"sv, version, static_cast<uint32_t>(kSerializationVersion), DecodeTypeCode(type).c_str());
                 continue;
             }
 
@@ -162,9 +162,9 @@ extern "C"
         SKSE::PluginVersionData v{};
         v.pluginVersion = Version::MAJOR;
         v.PluginName("iEquipUtil"sv);
-        v.CompatibleVersions({ SKSE::RUNTIME_LATEST });
-        v.UsesAddressLibrary(true);
-        v.UsesStructsPost629(true);
+        v.CompatibleVersions({ SKSE::RUNTIME_SSE_LATEST_AE });
+        v.UsesAddressLibrary();
+        v.UsesUpdatedStructs();
         return v;
     }();
 
@@ -225,7 +225,7 @@ extern "C"
             Papyrus::Register();
             Hooks::Install();
         } catch (const std::exception& e) {
-            logger::critical(e.what());
+            logger::critical("{}", e.what());
             return false;
         } catch (...) {
             logger::critical("caught unknown exception"sv);
