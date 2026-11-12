@@ -3,6 +3,16 @@ cmake_minimum_required(VERSION 3.19)
 set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
 set(VCPKG_TARGET_TRIPLET "x64-windows-static-md" CACHE STRING "")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(BUILD_TESTS OFF CACHE BOOL "" FORCE)
+
+# ---- Options ----
+
+option(ENABLE_SKYRIM_SE "Enable Skyrim SE support" OFF)
+option(ENABLE_SKYRIM_AE "Enable Skyrim AE support" ON)
+option(ENABLE_SKYRIM_VR "Enable Skyrim VR support" OFF)
+if(ENABLE_SKYRIM_SE OR ENABLE_SKYRIM_VR OR NOT ENABLE_SKYRIM_AE)
+	message(FATAL_ERROR "iEquipUtil requires an AE-only build: set ENABLE_SKYRIM_AE=ON, ENABLE_SKYRIM_SE=OFF, and ENABLE_SKYRIM_VR=OFF.")
+endif()
 
 # ---- Project ----
 
@@ -86,6 +96,8 @@ target_compile_features(
 		cxx_std_20
 )
 
+target_compile_definitions(${PROJECT_NAME} PRIVATE NOMINMAX)
+
 target_include_directories(
 	${PROJECT_NAME}
 	PRIVATE
@@ -102,7 +114,7 @@ target_link_libraries(
 		spdlog::spdlog
 		xbyak::xbyak
 		nlohmann_json::nlohmann_json
-		utf8cpp	
+		utf8cpp::utf8cpp
 )
 
 target_precompile_headers(
@@ -128,9 +140,13 @@ endif()
 
 # ---- Post build ----
 
-add_custom_command(
-	TARGET ${PROJECT_NAME}
-	POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${PROJECT_NAME}> $ENV{Skyrim64AEPath}/Data/SKSE/Plugins/
-	COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_PDB_FILE:${PROJECT_NAME}> $ENV{Skyrim64AEPath}/Data/SKSE/Plugins/
-)
+if(DEFINED ENV{Skyrim64AEPath} AND NOT "$ENV{Skyrim64AEPath}" STREQUAL "")
+	add_custom_command(
+		TARGET ${PROJECT_NAME}
+		POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${PROJECT_NAME}> "$ENV{Skyrim64AEPath}/Data/SKSE/Plugins/"
+		COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_PDB_FILE:${PROJECT_NAME}> "$ENV{Skyrim64AEPath}/Data/SKSE/Plugins/"
+	)
+else()
+	message(STATUS "Skyrim64AEPath is not set; the DLL and PDB will not be copied to the game directory.")
+endif()

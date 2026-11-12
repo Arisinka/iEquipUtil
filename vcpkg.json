@@ -5,18 +5,17 @@
   "homepage": "https://github.com/ahzaab/iEquipUtil",
   "license": "MIT",
   "dependencies": [
-    "boost-stl-interfaces",
+    "utfcpp",
+    "directxtk",
+    "directxmath",
+    "fmt",
+    "nlohmann-json",
+    "rapidcsv",
+    "simpleini",
     "spdlog",
+    "toml11",
     "xbyak",
-    "rsm-binary-io",
-	  "nlohmann-json",
-    "utfcpp"
+    "rsm-binary-io"
   ],
-  "builtin-baseline":"bba8794b82a0f44b8709f294850a2c8e96b61415",
-  "overrides":[
-    {
-       "name":"fmt",
-       "version":"8.0.1"
-    }
- ]   
+  "builtin-baseline": "ee12231b20c95013c6638d845d04c91559a1d1ff"
 }

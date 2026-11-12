@@ -22,18 +22,19 @@ namespace ActorExt
         }
 
         auto actorValue = static_cast<RE::ActorValue>(a_actorValue);
+        auto& runtime = a_actor->GetActorRuntimeData();
         switch (actorValue) {
         case RE::ActorValue::kHealth:
-            return std::abs(a_actor->healthModifiers.modifiers[Modifier::kDamage]);
+            return std::abs(runtime.healthModifiers.modifiers[Modifier::kDamage]);
         case RE::ActorValue::kMagicka:
-            return std::abs(a_actor->magickaModifiers.modifiers[Modifier::kDamage]);
+            return std::abs(runtime.magickaModifiers.modifiers[Modifier::kDamage]);
         case RE::ActorValue::kStamina:
-            return std::abs(a_actor->staminaModifiers.modifiers[Modifier::kDamage]);
+            return std::abs(runtime.staminaModifiers.modifiers[Modifier::kDamage]);
         case RE::ActorValue::kVoicePoints:
-            return std::abs(a_actor->voicePointsModifiers.modifiers[Modifier::kDamage]);
+            return std::abs(runtime.voicePointsModifiers.modifiers[Modifier::kDamage]);
         default:
         {
-            auto mod = a_actor->avStorage.modifiers[actorValue];
+            auto mod = runtime.avStorage.modifiers[actorValue];
             return mod ? std::abs(mod->modifiers[Modifier::kDamage]) : 0.0f;
         }
         }
@@ -49,7 +50,7 @@ namespace ActorExt
 
         if (a_actor->IsPlayerRef()) {
             auto player = RE::PlayerCharacter::GetSingleton();
-            return player->charGenRace;
+            return player->GetPlayerRuntimeData().charGenRace;
         } else {
             auto npc = a_actor->GetActorBase();
             return npc ? npc->race : 0;
@@ -91,7 +92,7 @@ namespace ActorExt
         if (!a_actor) {
             a_vm->TraceStack("a_actor is a NONE form!", a_stackID, Severity::kWarning);
             return 0;
-        } else if (!a_actor->currentProcess) {
+        } else if (!a_actor->GetActorRuntimeData().currentProcess) {
             a_vm->TraceStack("Actor does not have an AI process!", a_stackID, Severity::kWarning);
             return 0;
         }
@@ -109,7 +110,7 @@ namespace ActorExt
             return 0;
         }
 
-        auto item = a_actor->currentProcess->equippedObjects[equipHand];
+        auto item = a_actor->GetActorRuntimeData().currentProcess->equippedObjects[equipHand];
         return item && item->IsWeapon() ? static_cast<RE::TESObjectWEAP*>(item) : 0;
     }
 

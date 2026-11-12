@@ -93,7 +93,7 @@ namespace InventoryExt
                 slotOut = dobj->GetObject<RE::BGSEquipSlot>(Object::kLeftHandEquip);
                 break;
             default:
-                a_vm->VTraceStack("a_equipSlot is not a slot (%i)!", a_stackID, Severity::kWarning, a_equipSlot);
+                a_vm->VTraceStack(a_stackID, Severity::kWarning, "a_equipSlot is not a slot (%u)!", static_cast<uint32_t>(a_equipSlot));
                 return std::nullopt;
             }
 
@@ -372,12 +372,12 @@ namespace InventoryExt
         if (!invMenu) {
             a_vm->TraceStack("Inventory menu is not open!", a_stackID, Severity::kWarning);
             return RefHandleManager::kInvalidRefHandle;
-        } else if (!invMenu->itemList) {
+        } else if (!invMenu->GetRuntimeData().itemList) {
             a_vm->TraceStack("Inventory menu is has no item list!", a_stackID, Severity::kWarning);
             return RefHandleManager::kInvalidRefHandle;
         }
 
-        auto& items = invMenu->itemList->items;
+        auto& items = invMenu->GetRuntimeData().itemList->items;
         if (a_index >= items.size()) {
             a_vm->TraceStack("Index is out of range!", a_stackID, Severity::kWarning);
             return RefHandleManager::kInvalidRefHandle;

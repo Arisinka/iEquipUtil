@@ -10,7 +10,6 @@
 
 #include "RefHandleManager.h"
 #include "Registration.h"
-#include "BaseExtraListEx.h"
 
 namespace Hooks
 {
@@ -21,7 +20,7 @@ namespace Hooks
         public:
             static void InstallHooks()
             {
-                REL::Relocation<std::uintptr_t> vTable(RE::Offset::PlayerCharacter::Vtbl);
+                REL::Relocation<std::uintptr_t> vTable(RE::VTABLE_PlayerCharacter[0]);
                 _RemoveItem = vTable.write_vfunc(0x56, &PlayerCharacterEx::Hook_RemoveItem);
                 _AddObjectToContainer = vTable.write_vfunc(0x5A, &PlayerCharacterEx::Hook_AddObjectToContainer);
                 _PickUpObject = vTable.write_vfunc(0xCC, &PlayerCharacterEx::Hook_PickUpObject);
@@ -157,7 +156,6 @@ namespace Hooks
     void Install()
     {
         PlayerCharacterEx::InstallHooks();
-        BaseExtraListEx::InstallHooks();
         logger::info("Installed all hooks");
     }
 }
